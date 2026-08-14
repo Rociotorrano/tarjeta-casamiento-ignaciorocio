@@ -389,7 +389,10 @@ img { display: block; max-width: 100%; }
   list-style: none;
   margin-top: 30px;
   text-align: left;
+  display: none;
 }
+
+.tips-list.panel-open { display: block; animation: tipIn 0.5s ease both; }
 
 .tips-list li {
   display: flex;
@@ -849,9 +852,6 @@ img { display: block; max-width: 100%; }
 }
 
 /* ====== TIPS EXTRA ====== */
-.tips-list .tip-extra { display: none; }
-.tips-list.panel-open .tip-extra { display: flex; animation: tipIn 0.5s ease both; }
-
 @keyframes tipIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: none; }
