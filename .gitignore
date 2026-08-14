@@ -1,0 +1,13 @@
+# Video de referencia (no forma parte de la invitación)
+*.mp4
+*.mov
+*.m4v
+
+# Basura de macOS
+.DS_Store
+._*
+.AppleDouble
+
+# Temporales
+node_modules/
+.venv/
