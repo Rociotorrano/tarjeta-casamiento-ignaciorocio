@@ -12,6 +12,9 @@
 </head>
 <body>
 
+  <!-- ===== VIDEO DE FONDO (loop) ===== -->
+  <video id="bg-video" src="fondo.mp4" muted autoplay loop playsinline webkit-playsinline preload="auto" aria-hidden="true"></video>
+
   <!-- ===== VIDEO DE ENTRADA ===== -->
   <div id="entrada" class="entrada">
     <video id="entrada-video" src="entrada.mp4" muted playsinline webkit-playsinline autoplay preload="auto"></video>
@@ -25,14 +28,14 @@
   </div>
 
   <!-- ===== PORTADA ===== -->
-  <section id="portada" class="cover">
+  <section id="portada" class="cover video-bg">
     <div class="cover-bg"></div>
     <div class="cover-inner">
      
       <h1 class="cover-names"><span class="name">Ignacio</span> <span class="amp">&amp;</span> <span class="name">Rocío</span></h1>
       <h2 class="cover-title">¡Nuestra Boda!</h2>
       <p class="cover-quote">"Te elijo hoy y por el resto de mi vida"</p>
-      <p class="cover-date">06 . 03 . 2027</p>
+
     </div>
     <div class="cover-scroll">
       <span>Deslizá</span>
@@ -89,7 +92,7 @@
   </section>
 
   <!-- ===== CEREMONIA ===== -->
-  <section id="ceremonia" class="section dark">
+  <section id="ceremonia" class="section dark video-bg">
     <div class="section-inner">
       <p class="section-eyebrow gold reveal">Ceremonia</p>
       <h2 class="section-title reveal">Nuestra Señora<br />de los Dolores</h2>
@@ -102,7 +105,7 @@
   </section>
 
   <!-- ===== CELEBRACIÓN ===== -->
-  <section id="celebracion" class="section cream">
+  <section id="celebracion" class="section cream video-bg">
     <div class="section-inner">
       <p class="section-eyebrow reveal">Celebración</p>
       <h2 class="section-title reveal">Salón María Lucrecia<br />Pavón</h2>
@@ -147,7 +150,7 @@
   </section>
 
   <!-- ===== DRESS CODE ===== -->
-  <section id="dresscode" class="section cream" data-animate>
+  <section id="dresscode" class="section cream video-bg" data-animate>
     <div class="section-inner">
       <div class="icon-float">
         <svg class="icon-anim icon-hanger" viewBox="0 0 24 24" aria-hidden="true">
@@ -182,7 +185,7 @@
   </section>
 
   <!-- ===== TIPS Y NOTAS ===== -->
-  <section id="tips" class="section dark">
+  <section id="tips" class="section dark video-bg">
     <div class="section-inner">
       <p class="section-eyebrow gold reveal">Tips y Notas</p>
       <h2 class="section-title reveal">Información adicional<br />a considerar</h2>
@@ -286,7 +289,7 @@
   </section>
 
   <!-- ===== DESPEDIDA ===== -->
-  <section id="despedida" class="section dark farewell">
+  <section id="despedida" class="section dark farewell video-bg">
     <div class="section-inner">
       <h2 class="section-title reveal">¡Los esperamos!</h2>
       <p class="farewell-names reveal">Ignacio &amp; Rocío</p>

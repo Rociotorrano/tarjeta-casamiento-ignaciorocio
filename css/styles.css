@@ -20,13 +20,28 @@ html { scroll-behavior: smooth; }
 body {
   font-family: var(--serif);
   font-style: italic;
-  background: var(--cream);
+  background: transparent;
   color: var(--text-on-cream);
   max-width: 500px;
   margin: 0 auto;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.18);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Video de fondo fijo (loop continuo) */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  max-width: 100%;
+  height: 100vh;
+  height: 100svh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Elementos con tipografía sans: se mantienen derechos */
@@ -50,12 +65,42 @@ body {
 img { display: block; max-width: 100%; }
 
 /* ====== SECCIONES ====== */
-.section { padding: 72px 28px; text-align: center; }
+.section { padding: 0; text-align: center; position: relative; }
 
-.section.cream { background: var(--cream); }
-.section.dark { background: var(--dark); color: var(--cream); }
+.section.cream, .section.dark { background: #fff; color: var(--text-on-cream); }
 
-.section-inner { max-width: 420px; margin: 0 auto; }
+.section.video-bg { background: transparent; color: var(--cream); }
+
+.section.video-bg::before,
+.cover.video-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 15, 17, 0.45);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.section.video-bg .section-inner,
+.section.video-bg::after,
+.cover.video-bg .cover-inner,
+.cover.video-bg::after {
+  position: relative;
+  z-index: 1;
+}
+
+.cover.video-bg .cover-scroll {
+  position: absolute;
+  z-index: 1;
+}
+
+.section-inner {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.section:last-of-type { padding-bottom: 72px; }
 
 .section-eyebrow {
   font-family: var(--sans);
@@ -94,12 +139,15 @@ img { display: block; max-width: 100%; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--dark);
-  color: var(--cream);
-  padding: 60px 28px 90px;
+  background: #fff;
+  color: var(--text-on-cream);
+  padding: 0;
   overflow: hidden;
   text-align: center;
 }
+
+.cover.video-bg { background: transparent; color: var(--cream); }
+.cover.video-bg .cover-scroll { color: var(--cream); }
 
 .cover-bg {
   position: absolute;
@@ -115,7 +163,7 @@ img { display: block; max-width: 100%; }
   50% { opacity: 1; transform: scale(1.06); }
 }
 
-.cover-inner { position: relative; z-index: 1; }
+.cover-inner { position: relative; z-index: 1; width: 100%; padding: 60px 24px; }
 
 .cover-overline {
   font-family: var(--sans);
@@ -172,14 +220,14 @@ img { display: block; max-width: 100%; }
 
 .cover-scroll {
   position: absolute;
-  bottom: 34px;
+  bottom: 160px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  color: var(--cream);
+  color: var(--text-on-cream);
   opacity: 0.8;
   font-family: var(--sans);
   font-size: 11px;
@@ -214,8 +262,8 @@ img { display: block; max-width: 100%; }
 
 .cd-box {
   flex: 0 1 84px;
-  background: var(--dark);
-  color: var(--cream);
+  background: var(--cream-2);
+  color: var(--text-on-cream);
   border: 1px solid rgba(178, 58, 78, 0.35);
   border-radius: 14px;
   padding: 16px 6px 12px;
@@ -416,8 +464,8 @@ img { display: block; max-width: 100%; }
 
 /* ====== REGALOS ====== */
 .gift-card {
-  background: var(--dark);
-  color: var(--cream);
+  background: var(--cream-2);
+  color: var(--text-on-cream);
   border-radius: 18px;
   padding: 34px 24px;
   margin-top: 26px;
@@ -443,7 +491,7 @@ img { display: block; max-width: 100%; }
 
 /* ====== CONFIRMACIÓN ====== */
 .confirm-card {
-  background: var(--cream);
+  background: var(--cream-2);
   color: var(--text-on-cream);
   border-radius: 18px;
   padding: 34px 26px;
@@ -788,8 +836,8 @@ img { display: block; max-width: 100%; }
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  background: var(--dark);
-  color: var(--cream);
+  background: var(--cream-2);
+  color: var(--text-on-cream);
   border-radius: 18px;
   padding: 0 26px;
   margin-top: 0;
@@ -831,7 +879,7 @@ img { display: block; max-width: 100%; }
   font-family: var(--sans);
   font-size: 12px;
   letter-spacing: 1px;
-  color: var(--cream);
+  color: var(--text-on-cream);
 }
 
 .swatch {
@@ -839,8 +887,8 @@ img { display: block; max-width: 100%; }
   height: 42px;
   border-radius: 50%;
   background: var(--c);
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(110, 20, 35, 0.3);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .palette-note {
@@ -1016,9 +1064,27 @@ body.no-scroll { overflow: hidden; }
   transform: none;
 }
 
+/* ====== DIVISOR DE FLORES ====== */
+.section::after,
+.cover::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 90px;
+  background: url("../assets/bodes.png") center / cover no-repeat;
+  pointer-events: none;
+}
+
+.section:last-of-type::after {
+  display: none;
+}
+
 @media (min-width: 500px) {
-  .section { padding: 90px 36px; }
   .section-title { font-size: 44px; }
+  .section::after,
+  .cover::after {
+    height: 110px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
