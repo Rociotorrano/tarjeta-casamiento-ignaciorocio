@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Invitación de casamiento de Ignacio y Rocío" />
+  <title>Ignacio &amp; Rocío — Nuestra Boda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ===== VIDEO DE ENTRADA ===== -->
+  <div id="entrada" class="entrada">
+    <video id="entrada-video" src="entrada.mp4" muted playsinline webkit-playsinline autoplay preload="auto"></video>
+    <button id="entrada-skip" class="entrada-skip" aria-label="Saltar intro">Saltar</button>
+  </div>
+
+  <!-- ===== VIDEO FINAL (CONFIRMACIÓN) ===== -->
+  <div id="finale" class="finale" hidden>
+    <video id="finale-video" src="ahorasi.mp4" playsinline webkit-playsinline preload="auto"></video>
+    <p class="finale-closed" id="finale-closed">¡Gracias por tu confirmación!</p>
+  </div>
+
+  <!-- ===== PORTADA ===== -->
+  <section id="portada" class="cover">
+    <div class="cover-bg"></div>
+    <div class="cover-inner">
+     
+      <h1 class="cover-names"><span class="name">Ignacio</span> <span class="amp">&amp;</span> <span class="name">Rocío</span></h1>
+      <h2 class="cover-title">¡Nuestra Boda!</h2>
+      <p class="cover-quote">"Te elijo hoy y por el resto de mi vida"</p>
+      <p class="cover-date">06 . 03 . 2027</p>
+    </div>
+    <div class="cover-scroll">
+      <span>Deslizá</span>
+      <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===== FECHA / CUENTA REGRESIVA ===== -->
+  <section id="fecha" class="section cream">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">La fecha</p>
+      <h2 class="section-title reveal">¿Cuándo nos casamos?</h2>
+      <p class="section-sub reveal">Nos casamos y queremos que seas parte de este momento tan especial.</p>
+
+      <div class="scratch-group reveal" id="scratch-group">
+        <div class="scratch-circle" id="scratch-1">
+          <div class="scratch-hidden">
+            <p class="scratch-num scratch-num--big">6</p>
+          </div>
+          <canvas class="scratch-canvas" aria-hidden="true"></canvas>
+        </div>
+        <div class="scratch-circle" id="scratch-2">
+          <div class="scratch-hidden">
+            <p class="scratch-num scratch-num--word">Marzo</p>
+          </div>
+          <canvas class="scratch-canvas" aria-hidden="true"></canvas>
+        </div>
+        <div class="scratch-circle" id="scratch-3">
+          <div class="scratch-hidden">
+            <p class="scratch-num scratch-num--big">2027</p>
+          </div>
+          <canvas class="scratch-canvas" aria-hidden="true"></canvas>
+        </div>
+      </div>
+
+      <div class="countdown reveal" id="countdown">
+        <div class="cd-box"><span class="cd-num" id="cd-dias">000</span><span class="cd-label">Días</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-horas">00</span><span class="cd-label">Horas</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-min">00</span><span class="cd-label">Min</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-seg">00</span><span class="cd-label">Seg</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EVENTO PARA ADULTOS ===== -->
+  <section id="adultos" class="section dark">
+    <div class="section-inner">
+      <p class="section-eyebrow gold reveal">Un aviso importante</p>
+      <h2 class="section-title reveal">Evento para adultos</h2>
+      <p class="section-sub reveal">Agradecemos su comprensión; nuestra celebración será un evento íntimo pensado exclusivamente para adultos.</p>
+    </div>
+  </section>
+
+  <!-- ===== CEREMONIA ===== -->
+  <section id="ceremonia" class="section dark">
+    <div class="section-inner">
+      <p class="section-eyebrow gold reveal">Ceremonia</p>
+      <h2 class="section-title reveal">Nuestra Señora<br />de los Dolores</h2>
+      <div class="event-meta reveal">
+        <p class="event-day">Sábado 6 · Marzo · 2027</p>
+        <p class="event-time">18:00 Hs</p>
+      </div>
+      <a class="btn outline reveal" href="#" target="_blank" rel="noopener" data-placeholder="mapa-ceremonia">Cómo llegar</a>
+    </div>
+  </section>
+
+  <!-- ===== CELEBRACIÓN ===== -->
+  <section id="celebracion" class="section cream">
+    <div class="section-inner">
+      <p class="section-eyebrow reveal">Celebración</p>
+      <h2 class="section-title reveal">Salón María Lucrecia<br />Pavón</h2>
+      <div class="event-meta reveal">
+        <p class="event-day">Sábado 6 · Marzo · 2027</p>
+        <p class="event-time">20:00 Hs</p>
+      </div>
+      <a class="btn solid reveal" href="#" target="_blank" rel="noopener" data-placeholder="mapa-celebracion">Cómo llegar</a>
+    </div>
+  </section>
+
+  <!-- ===== RETRATOS ===== -->
+  <section id="retratos" class="section dark gallery-section" data-animate>
+    <div class="section-inner">
+      <div class="icon-float">
+        <svg class="icon-anim icon-camera" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="7" y="15" width="34" height="23" rx="4" />
+          <path d="M13 15l3-6h16l3 6" />
+          <circle cx="24" cy="27" r="9" />
+          <circle cx="24" cy="27" r="3.5" fill="currentColor" stroke="none" />
+          <circle class="cam-flash" cx="36" cy="20" r="2" fill="currentColor" stroke="none" />
+        </svg>
+      </div>
+      <p class="section-eyebrow gold reveal">Retratos</p>
+      <h2 class="section-title reveal">Retratos de nuestro amor</h2>
+      <p class="section-sub reveal">La clave es disfrutar cada momento</p>
+
+      <div class="gallery reveal" id="galeria">
+        <figure class="g-item"><img src="assets/photo1.svg" alt="Foto 1" loading="lazy" /></figure>
+        <figure class="g-item"><img src="assets/photo2.svg" alt="Foto 2" loading="lazy" /></figure>
+        <figure class="g-item"><img src="assets/photo3.svg" alt="Foto 3" loading="lazy" /></figure>
+        <figure class="g-item"><img src="assets/photo4.svg" alt="Foto 4" loading="lazy" /></figure>
+        <figure class="g-item"><img src="assets/photo5.svg" alt="Foto 5" loading="lazy" /></figure>
+        <figure class="g-item"><img src="assets/photo6.svg" alt="Foto 6" loading="lazy" /></figure>
+      </div>
+      <div class="gallery-nav reveal">
+        <button class="g-nav" id="g-prev" aria-label="Anterior">‹</button>
+        <button class="g-nav" id="g-next" aria-label="Siguiente">›</button>
+      </div>
+      <p class="gallery-hint reveal">Deslizá para ver las fotos</p>
+    </div>
+  </section>
+
+  <!-- ===== DRESS CODE ===== -->
+  <section id="dresscode" class="section cream" data-animate>
+    <div class="section-inner">
+      <div class="icon-float">
+        <svg class="icon-anim icon-hanger" viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <linearGradient id="hang-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#b23a4e" />
+              <stop offset="1" stop-color="#6e1423" />
+            </linearGradient>
+          </defs>
+          <path d="M12 12l-8.5 5.2a2.2 2.2 0 1 0 2 3.8L12 17l6.5 4a2.2 2.2 0 1 0 2-3.8L12 12z" fill="url(#hang-grad)" stroke="#6e1423" stroke-width="0.6" />
+          <path d="M12 12V9a3 3 0 0 1 6 0c0 .9-.2 1.7-.6 2.4" fill="none" stroke="#6e1423" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </div>
+      <p class="section-eyebrow reveal">Dress Code</p>
+      <h2 class="section-title reveal">Una orientación<br />para tu vestimenta</h2>
+      <p class="dress-tag reveal">Formal / Elegante</p>
+      <p class="palette-note reveal">Evitá colores claros, beige y blanco.</p>
+      <p class="section-sub reveal">Te dejamos algunos colores de sugerencia</p>
+
+      <button class="btn solid reveal toggle-btn" data-toggle="dress-panel" data-more="Ver más" data-less="Ver menos">Ver más</button>
+
+      <div class="panel panel-soft" id="dress-panel">
+        <p class="palette-title">Formal · Elegante</p>
+        <ul class="palette">
+          <li><span class="swatch" style="--c:#161616"></span>Negro</li>
+          <li><span class="swatch" style="--c:#1f3d2b"></span>Verde</li>
+          <li><span class="swatch" style="--c:#6e1423"></span>Bordo</li>
+          <li><span class="swatch" style="--c:#1f3a5f"></span>Azul</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TIPS Y NOTAS ===== -->
+  <section id="tips" class="section dark">
+    <div class="section-inner">
+      <p class="section-eyebrow gold reveal">Tips y Notas</p>
+      <h2 class="section-title reveal">Información adicional<br />a considerar</h2>
+      <ul class="tips-list reveal" id="tips-list">
+        <li><span class="tip-mark">+</span> Por favor, ¡ser puntuales!</li>
+        <li><span class="tip-mark">+</span> Queremos que disfrutes de esta fiesta al máximo, por eso decidimos que sea un evento sólo para adultos.</li>
+        <li class="tip-extra"><span class="tip-mark">+</span> Llevar abrigo para disfrutar de los espacios exteriores.</li>
+        <li class="tip-extra"><span class="tip-mark">+</span> Llevar taco bajo o con plataforma, ya que la entrada es de pasto.</li>
+        <li class="tip-extra"><span class="tip-mark">+</span> Olvidarse de todo y disfrutar!!!</li>
+      </ul>
+      <button class="btn outline reveal toggle-btn" data-toggle="tips-list" data-more="Ver más consejos" data-less="Ver menos">Ver más consejos</button>
+    </div>
+  </section>
+
+  <!-- ===== REGALOS ===== -->
+  <section id="regalos" class="section cream" data-animate>
+    <div class="section-inner">
+      <div class="icon-float">
+        <svg class="icon-anim icon-gift" viewBox="0 0 48 52" aria-hidden="true">
+          <defs>
+            <linearGradient id="gift-box" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#b23a4e" />
+              <stop offset="1" stop-color="#6e1423" />
+            </linearGradient>
+            <linearGradient id="gift-lid" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c96a7e" />
+              <stop offset="1" stop-color="#8c1c31" />
+            </linearGradient>
+          </defs>
+          <rect x="10" y="24" width="28" height="22" rx="2" fill="url(#gift-box)" />
+          <rect x="8" y="18" width="32" height="7" rx="2" fill="url(#gift-lid)" />
+          <rect x="22.5" y="15" width="3" height="31" fill="#f2eee4" />
+          <rect x="10" y="20.5" width="28" height="3" fill="#f2eee4" opacity="0.9" />
+          <path d="M24 18 C24 10 12 10 12 18 C12 24 24 22 24 18 Z" fill="url(#gift-lid)" />
+          <path d="M24 18 C24 10 36 10 36 18 C36 24 24 22 24 18 Z" fill="url(#gift-lid)" />
+          <path d="M22 18 L19 27 Q18 30 16 31" stroke="#8c1c31" stroke-width="2.5" fill="none" stroke-linecap="round" />
+          <path d="M26 18 L29 27 Q30 30 32 31" stroke="#8c1c31" stroke-width="2.5" fill="none" stroke-linecap="round" />
+          <circle cx="24" cy="18" r="3" fill="#6e1423" />
+          <path class="gift-spark" d="M14 35 l1.3 3 3 1.3 -3 1.3 -1.3 3 -1.3 -3 -3 -1.3 3 -1.3 Z" fill="#f2eee4" />
+        </svg>
+      </div>
+      <p class="section-eyebrow reveal">Regalos</p>
+      <h2 class="section-title reveal">Si querés darnos algo más<br />que tu hermosa presencia</h2>
+      <p class="section-sub reveal">Contaremos con sobres disponibles para depositar en el cofre. También pueden contribuir mediante:</p>
+
+      <button class="btn solid reveal toggle-btn" data-toggle="gift-panel" data-more="Ver más" data-less="Ver menos">Ver más</button>
+
+      <div class="panel panel-gift" id="gift-panel">
+        <p class="gift-label">Depósito bancario</p>
+        <p class="gift-account" id="cuenta-bancaria">XXXX XXXX XXXX XXXX</p>
+        <button class="btn solid copy-btn" data-copy="cuenta-bancaria">Copiar número</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INVITACIÓN EXCLUSIVA ===== -->
+  <section id="exclusiva" class="section cream">
+    <div class="section-inner">
+      <div class="icon-float">
+        <svg class="icon-lock" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="10" y="21" width="28" height="20" rx="4" />
+          <path d="M17 21v-6a7 7 0 0 1 14 0v6" />
+          <circle cx="24" cy="31" r="3" />
+        </svg>
+      </div>
+      <p class="section-eyebrow reveal">Invitación personal</p>
+      <h2 class="section-title reveal">Una invitación exclusiva</h2>
+      <p class="section-sub reveal">Esta invitación es exclusivamente para la persona a quien se está enviando.</p>
+    </div>
+  </section>
+
+  <!-- ===== CONFIRMACIÓN ===== -->
+  <section id="confirmacion" class="section dark confirm-section">
+    <div class="section-inner">
+      <p class="section-eyebrow gold reveal">Confirmación</p>
+      <h2 class="section-title reveal">¿Nos acompañas en este<br />día tan especial?</h2>
+
+      <div class="confirm-card reveal">
+        <p class="confirm-question">¿Asistís a la celebración?</p>
+        <p class="confirm-date">Confirmá antes del 30/01/27</p>
+
+        <div class="rsvp-options" id="rsvp-options">
+          <button class="btn solid rsvp-btn" data-rsvp="si">¡Sí, confirmo!</button>
+          <button class="btn outline rsvp-btn" data-rsvp="no">No puedo</button>
+        </div>
+
+        <form id="rsvp-form" class="rsvp-form" hidden>
+          <p class="rsvp-choice" id="rsvp-choice"></p>
+          <input type="text" id="rsvp-nombre" class="input" placeholder="Ingresá tu nombre completo" required autocomplete="name" />
+          <input type="text" id="rsvp-dato" class="input" placeholder="Dato importante (ejemplo: celíaco)" autocomplete="off" />
+          <p class="rsvp-note" id="rsvp-note"></p>
+          <button type="submit" class="btn solid" id="rsvp-submit">Enviar confirmación</button>
+          <button type="button" class="btn link" id="rsvp-cambiar">Cambiar respuesta</button>
+        </form>
+
+        <div class="rsvp-done" id="rsvp-done" hidden>
+          <p class="rsvp-done-title">¡Gracias!</p>
+          <p id="rsvp-done-text"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DESPEDIDA ===== -->
+  <section id="despedida" class="section dark farewell">
+    <div class="section-inner">
+      <h2 class="section-title reveal">¡Los esperamos!</h2>
+      <p class="farewell-names reveal">Ignacio &amp; Rocío</p>
+      <p class="farewell-date reveal">06 · 03 · 2027</p>
+    </div>
+  </section>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">&times;</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <!-- ===== BURBUJAS ===== -->
+  <div id="bubbles" aria-hidden="true"></div>
+
+  <!-- ===== CONFETI ===== -->
+  <div id="confetti" aria-hidden="true"></div>
+
+  <!-- ===== MÚSICA DE FONDO ===== -->
+  <audio id="bg-music" src="audio/Lauv - Steal The Show (From Elemental).mp3" loop preload="auto"></audio>
+  <button id="music-btn" class="music-btn" aria-label="Reproducir música" title="Tocar para activar el sonido">
+    <svg id="icon-note" class="music-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+    </svg>
+    <svg id="icon-pause" class="music-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden>
+      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+    </svg>
+    <span class="music-ring"></span>
+  </button>
+  <p class="music-hint" id="music-hint" hidden>Sonido activado ♪</p>
+
+  <script src="js/config.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
