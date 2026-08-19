@@ -1,0 +1,15 @@
+# Video de referencia (no forma parte de la invitación)
+WhatsApp Video*.mp4
+
+# Videos de la invitación (SÍ se suben)
+!entrada.mp4
+!ahorasi.mp4
+
+# Basura de macOS
+.DS_Store
+._*
+.AppleDouble
+
+# Temporales
+node_modules/
+.venv/
