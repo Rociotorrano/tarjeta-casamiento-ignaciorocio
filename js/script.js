@@ -369,11 +369,26 @@
     const gal = d.getElementById("galeria");
     const prev = d.getElementById("g-prev");
     const next = d.getElementById("g-next");
+    const counter = d.getElementById("gallery-counter");
     if (!gal) return;
+    const items = gal.querySelectorAll(".g-item");
+    const total = items.length;
+    let current = 1;
+
     const step = () => {
       const item = gal.querySelector(".g-item");
-      return item ? item.getBoundingClientRect().width + 12 : 300;
+      return item ? item.getBoundingClientRect().width : 300;
     };
+
+    function updateCounter() {
+      const scrollLeft = gal.scrollLeft;
+      const w = step();
+      current = Math.round(scrollLeft / w) + 1;
+      if (current < 1) current = 1;
+      if (current > total) current = total;
+      if (counter) counter.textContent = current + " / " + total;
+    }
+
     if (prev) {
       prev.addEventListener("click", () => {
         gal.scrollBy({ left: -step(), behavior: "smooth" });
@@ -384,22 +399,53 @@
         gal.scrollBy({ left: step(), behavior: "smooth" });
       });
     }
+
+    gal.addEventListener("scroll", updateCounter, { passive: true });
+    updateCounter();
   }
 
   /* ---------- Galería / lightbox ---------- */
   function initGallery() {
     const box = d.getElementById("lightbox");
-    const img = d.getElementById("lightbox-img");
-    if (!box) return;
+    const track = d.getElementById("lightbox-track");
+    const counter = d.getElementById("lightbox-counter");
+    const prev = d.getElementById("lb-prev");
+    const next = d.getElementById("lb-next");
+    if (!box || !track) return;
 
-    d.querySelectorAll("#galeria .g-item img").forEach((im) => {
+    const items = d.querySelectorAll("#galeria .g-item");
+    const slides = track.querySelectorAll(".lb-slide");
+    const total = slides.length;
+
+    function updateCounter() {
+      const w = track.clientWidth;
+      const idx = Math.round(track.scrollLeft / w) + 1;
+      if (counter) counter.textContent = idx + " / " + total;
+    }
+
+    d.querySelectorAll("#galeria .g-item img").forEach((im, i) => {
       im.addEventListener("click", () => {
-        img.src = im.src;
-        img.alt = im.alt;
         box.hidden = false;
         document.body.style.overflow = "hidden";
+        track.scrollLeft = i * track.clientWidth;
+        updateCounter();
       });
     });
+
+    if (prev) {
+      prev.addEventListener("click", (e) => {
+        e.stopPropagation();
+        track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
+      });
+    }
+    if (next) {
+      next.addEventListener("click", (e) => {
+        e.stopPropagation();
+        track.scrollBy({ left: track.clientWidth, behavior: "smooth" });
+      });
+    }
+
+    track.addEventListener("scroll", updateCounter, { passive: true });
 
     function close() {
       box.hidden = true;
@@ -411,6 +457,9 @@
     });
     d.addEventListener("keydown", (e) => {
       if (e.key === "Escape") close();
+      if (box.hidden) return;
+      if (e.key === "ArrowLeft")  track.scrollBy({ left: -track.clientWidth, behavior: "smooth" });
+      if (e.key === "ArrowRight") track.scrollBy({ left:  track.clientWidth, behavior: "smooth" });
     });
   }
 

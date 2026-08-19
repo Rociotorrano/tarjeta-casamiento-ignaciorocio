@@ -163,6 +163,7 @@
         <figure class="g-item"><img src="assets/5.jpg" alt="Foto 5" loading="lazy" /></figure>
         <figure class="g-item"><img src="assets/6.jpg" alt="Foto 6" loading="lazy" /></figure>
       </div>
+      <p class="gallery-counter reveal" id="gallery-counter">1 / 6</p>
       <div class="gallery-nav reveal">
         <button class="g-nav" id="g-prev" aria-label="Anterior">‹</button>
         <button class="g-nav" id="g-next" aria-label="Siguiente">›</button>
@@ -184,6 +185,9 @@
           </defs>
           <path d="M12 12l-8.5 5.2a2.2 2.2 0 1 0 2 3.8L12 17l6.5 4a2.2 2.2 0 1 0 2-3.8L12 12z" fill="url(#hang-grad)" stroke="#6e1423" stroke-width="0.6" />
           <path d="M12 12V9a3 3 0 0 1 6 0c0 .9-.2 1.7-.6 2.4" fill="none" stroke="#6e1423" stroke-width="2" stroke-linecap="round" />
+          <path class="hanger-spark" d="M4.5 7 l0.8 2 2 0.8 -2 0.8 -0.8 2 -0.8 -2 -2 -0.8 2 -0.8 Z" fill="#f2eee4" />
+          <path class="hanger-spark" d="M18.5 4 l0.6 1.6 1.6 0.6 -1.6 0.6 -0.6 1.6 -0.6 -1.6 -1.6 -0.6 1.6 -0.6 Z" fill="#f2eee4" style="animation-delay: 0.6s" />
+          <path class="hanger-spark" d="M20 14 l0.5 1.4 1.4 0.5 -1.4 0.5 -0.5 1.4 -0.5 -1.4 -1.4 -0.5 1.4 -0.5 Z" fill="#f2eee4" style="animation-delay: 1.2s" />
         </svg>
       </div>
       <p class="section-eyebrow reveal">Dress Code</p>
@@ -211,6 +215,29 @@
   <!-- ===== TIPS Y NOTAS ===== -->
   <section id="tips" class="section dark video-bg glass-card-section">
     <div class="section-inner glass-card">
+      <div class="icon-float">
+        <svg class="icon-anim icon-bulb" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <defs>
+            <radialGradient id="bulb-lit" cx="0.5" cy="0.45" r="0.55">
+              <stop offset="0" stop-color="#fff8dc" />
+              <stop offset="0.5" stop-color="#f5d98e" />
+              <stop offset="1" stop-color="#d4af78" />
+            </radialGradient>
+          </defs>
+          <path d="M24 6c-6.6 0-11 5-11 11.5 0 4 2.2 7.2 5.5 9V34h11v-7.5c3.3-1.8 5.5-5 5.5-9C35 11 30.6 6 24 6z" fill="url(#bulb-lit)" />
+          <line x1="19" y1="37" x2="29" y2="37" />
+          <line x1="20" y1="40" x2="28" y2="40" />
+          <circle cx="24" cy="18" r="2" fill="#fff8dc" stroke="none" class="bulb-glow-dot" />
+          <line x1="24" y1="2" x2="24" y2="4" />
+          <line x1="35" y1="7" x2="33.5" y2="8.5" />
+          <line x1="39" y1="18" x2="37" y2="18" />
+          <line x1="9" y1="18" x2="11" y2="18" />
+          <line x1="13" y1="7" x2="14.5" y2="8.5" />
+          <path class="bulb-spark" d="M5 10 l0.8 2 2 0.8 -2 0.8 -0.8 2 -0.8 -2 -2 -0.8 2 -0.8 Z" fill="#d4af78" />
+          <path class="bulb-spark" d="M38 28 l0.6 1.6 1.6 0.6 -1.6 0.6 -0.6 1.6 -0.6 -1.6 -1.6 -0.6 1.6 -0.6 Z" fill="#d4af78" style="animation-delay: 0.6s" />
+          <path class="bulb-spark" d="M42 12 l0.5 1.3 1.3 0.5 -1.3 0.5 -0.5 1.3 -0.5 -1.3 -1.3 -0.5 1.3 -0.5 Z" fill="#d4af78" style="animation-delay: 1.2s" />
+        </svg>
+      </div>
       <p class="section-eyebrow gold reveal">Tips y Notas</p>
       <h2 class="section-title reveal">Información adicional<br />a considerar</h2>
       <ul class="tips-list reveal" id="tips-list">
@@ -268,7 +295,7 @@
   <section id="exclusiva" class="section cream">
     <div class="section-inner">
       <div class="icon-float">
-        <svg class="icon-lock" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class="icon-anim icon-lock" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="10" y="21" width="28" height="20" rx="4" />
           <path d="M17 21v-6a7 7 0 0 1 14 0v6" />
           <circle cx="24" cy="31" r="3" />
@@ -287,7 +314,7 @@
       <h2 class="section-title reveal">¿Nos acompañas en este<br />día tan especial?</h2>
 
       <div class="confirm-card reveal">
-        <p class="confirm-question">¿Asistís a la celebración?</p>
+      
         <p class="confirm-date">Confirmá antes del 30/12/26</p>
 
         <div class="rsvp-options" id="rsvp-options">
@@ -324,7 +351,17 @@
   <!-- ===== LIGHTBOX ===== -->
   <div id="lightbox" class="lightbox" hidden>
     <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">&times;</button>
-    <img id="lightbox-img" src="" alt="" />
+    <button class="lightbox-nav lb-prev" id="lb-prev" aria-label="Anterior">&#8249;</button>
+    <div class="lightbox-track" id="lightbox-track">
+      <div class="lb-slide"><img src="assets/1.jpeg" alt="Foto 1" /></div>
+      <div class="lb-slide"><img src="assets/2.jpeg" alt="Foto 2" /></div>
+      <div class="lb-slide"><img src="assets/3.jpg" alt="Foto 3" /></div>
+      <div class="lb-slide"><img src="assets/4.jpg" alt="Foto 4" /></div>
+      <div class="lb-slide"><img src="assets/5.jpg" alt="Foto 5" /></div>
+      <div class="lb-slide"><img src="assets/6.jpg" alt="Foto 6" /></div>
+    </div>
+    <button class="lightbox-nav lb-next" id="lb-next" aria-label="Siguiente">&#8250;</button>
+    <p class="lightbox-counter" id="lightbox-counter">1 / 6</p>
   </div>
 
   <!-- ===== BURBUJAS ===== -->
