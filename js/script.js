@@ -162,12 +162,12 @@
     for (let i = 0; i < count; i++) {
       const b = d.createElement("span");
       b.className = "bubble";
-      const size = 10 + Math.random() * 38;
+      const size = 18 + Math.random() * 48;
       b.style.width = b.style.height = size.toFixed(1) + "px";
       b.style.left = (Math.random() * 100).toFixed(1) + "%";
       b.style.setProperty("--sway", (Math.random() * 60 - 30).toFixed(0) + "px");
-      b.style.setProperty("--o", (0.15 + Math.random() * 0.35).toFixed(2));
-      b.style.animationDuration = (12 + Math.random() * 18).toFixed(1) + "s";
+      b.style.setProperty("--o", (0.4 + Math.random() * 0.4).toFixed(2));
+      b.style.animationDuration = (10 + Math.random() * 14).toFixed(1) + "s";
       b.style.animationDelay = (-Math.random() * 30).toFixed(1) + "s";
       layer.appendChild(b);
     }
@@ -576,6 +576,22 @@
     audio.addEventListener("play", () => setPlaying(true));
   }
 
+  /* ---------- Perlas en esquinas ---------- */
+  function initPerlas() {
+    const corners = ["perla-tl", "perla-tr", "perla-bl", "perla-br"];
+    d.querySelectorAll(".section.cream, .section.dark").forEach((sec) => {
+      if (sec.classList.contains("video-bg") || sec.classList.contains("glass-card-section")) return;
+      corners.forEach((cls) => {
+        const img = d.createElement("img");
+        img.src = "assets/perlas.png";
+        img.alt = "";
+        img.className = "perla-corner " + cls;
+        img.setAttribute("aria-hidden", "true");
+        sec.appendChild(img);
+      });
+    });
+  }
+
   /* ---------- Init ---------- */
   function init() {
     initEntrada();
@@ -591,6 +607,7 @@
     initGallery();
     initRsvp();
     initMusic();
+    initPerlas();
     // Fuerza visibilidad de la portada
     d.querySelectorAll("#portada .reveal").forEach((el) =>
       el.classList.add("is-visible")

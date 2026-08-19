@@ -69,6 +69,20 @@ img { display: block; max-width: 100%; }
 
 .section.cream, .section.dark { background: #fff; color: var(--text-on-cream); }
 
+/* ====== PERLAS EN ESQUINAS ====== */
+.perla-corner {
+  position: absolute;
+  width: 90px;
+  height: auto;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.perla-tl { top: 6px; left: 6px; }
+.perla-tr { top: 6px; right: 6px; transform: scaleX(-1); }
+.perla-bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
+.perla-br { bottom: 6px; right: 6px; transform: scale(-1, -1); }
+
 .section.video-bg { background: transparent; color: var(--cream); }
 
 .section.video-bg::before,
@@ -165,6 +179,13 @@ img { display: block; max-width: 100%; }
 }
 
 /* ====== ITINERARIO ====== */
+.itinerario-img {
+  width: 100%;
+  max-width: 370px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 14px;
+}
 .timeline {
   list-style: none;
   margin-top: 40px;
@@ -307,14 +328,11 @@ img { display: block; max-width: 100%; }
 }
 
 .cover-scroll {
-  position: absolute;
-  bottom: 160px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin-top: 40px;
   color: var(--text-on-cream);
   opacity: 0.8;
   font-family: var(--sans);
@@ -506,11 +524,12 @@ img { display: block; max-width: 100%; }
   text-transform: uppercase;
   color: var(--gold-light);
   opacity: 0.8;
+  text-align: center;
 }
 
 /* ====== DRESS CODE ====== */
 .dress-tag {
-  display: inline-block;
+  display: block;
   font-family: var(--script);
   font-size: 40px;
   color: var(--gold);
@@ -518,6 +537,20 @@ img { display: block; max-width: 100%; }
   border-radius: 60px;
   padding: 12px 38px 18px;
   margin: 10px 0 30px;
+  text-align: center;
+}
+
+.dress-tag-title {
+  display: block;
+}
+
+.dress-tag .palette-note {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: var(--sans);
+  color: var(--gold);
+  margin-top: 6px;
 }
 
 /* ====== TIPS ====== */
@@ -1097,8 +1130,8 @@ body.no-scroll { overflow: hidden; }
   position: absolute;
   bottom: -70px;
   border-radius: 50%;
-  background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.4), rgba(178, 58, 78, 0.28) 55%, rgba(110, 20, 35, 0.18));
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.7), rgba(178, 58, 78, 0.45) 55%, rgba(110, 20, 35, 0.3));
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
   animation: bubbleRise linear infinite;
   will-change: transform, opacity;
 }
@@ -1108,8 +1141,8 @@ body.no-scroll { overflow: hidden; }
     transform: translateY(0) translateX(0) scale(1);
     opacity: 0;
   }
-  10% { opacity: var(--o, 0.5); }
-  85% { opacity: var(--o, 0.5); }
+  10% { opacity: var(--o, 0.8); }
+  85% { opacity: var(--o, 0.8); }
   100% {
     transform: translateY(calc(-100vh - 80px)) translateX(var(--sway, 30px)) scale(1.05);
     opacity: 0;
