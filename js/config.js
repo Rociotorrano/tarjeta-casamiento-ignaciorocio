@@ -6,7 +6,7 @@
 const CONFIG = {
   // --- Datos de la pareja ---
   novio: "Ignacio",
-  novia: "Rocío",
+  novia: "Rocio",
 
   // --- Música de fondo ---
   // Reemplazá el nombre si cargás otra canción en la carpeta audio/

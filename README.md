@@ -1,4 +1,4 @@
-# Invitación de Casamiento — Ignacio & Rocío
+# Invitación de Casamiento — Ignacio & Rocio
 
 Tarjeta digital para compartir por WhatsApp. Se abre con solo tocar el enlace.
 
