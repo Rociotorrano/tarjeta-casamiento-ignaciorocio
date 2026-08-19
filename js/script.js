@@ -576,22 +576,6 @@
     audio.addEventListener("play", () => setPlaying(true));
   }
 
-  /* ---------- Perlas en esquinas ---------- */
-  function initPerlas() {
-    const corners = ["perla-tl", "perla-tr", "perla-bl", "perla-br"];
-    d.querySelectorAll(".section.cream, .section.dark").forEach((sec) => {
-      if (sec.classList.contains("video-bg") || sec.classList.contains("glass-card-section")) return;
-      corners.forEach((cls) => {
-        const img = d.createElement("img");
-        img.src = "assets/perlas.png";
-        img.alt = "";
-        img.className = "perla-corner " + cls;
-        img.setAttribute("aria-hidden", "true");
-        sec.appendChild(img);
-      });
-    });
-  }
-
   /* ---------- Init ---------- */
   function init() {
     initEntrada();
@@ -607,7 +591,6 @@
     initGallery();
     initRsvp();
     initMusic();
-    initPerlas();
     // Fuerza visibilidad de la portada
     d.querySelectorAll("#portada .reveal").forEach((el) =>
       el.classList.add("is-visible")

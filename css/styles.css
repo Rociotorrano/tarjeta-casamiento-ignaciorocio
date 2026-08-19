@@ -69,19 +69,6 @@ img { display: block; max-width: 100%; }
 
 .section.cream, .section.dark { background: #fff; color: var(--text-on-cream); }
 
-/* ====== PERLAS EN ESQUINAS ====== */
-.perla-corner {
-  position: absolute;
-  width: 90px;
-  height: auto;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.perla-tl { top: 6px; left: 6px; }
-.perla-tr { top: 6px; right: 6px; transform: scaleX(-1); }
-.perla-bl { bottom: 6px; left: 6px; transform: scaleY(-1); }
-.perla-br { bottom: 6px; right: 6px; transform: scale(-1, -1); }
 
 .section.video-bg { background: transparent; color: var(--cream); }
 
@@ -559,6 +546,39 @@ img { display: block; max-width: 100%; }
   margin-top: 30px;
   text-align: left;
   display: none;
+}
+
+/* ---------- Foco iluminado animado ---------- */
+#tips .glass-card {
+  position: relative;
+  overflow: hidden;
+}
+
+#tips .glass-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(circle 120px at var(--gx, 50%) var(--gy, 50%),
+    rgba(212, 175, 120, 0.22) 0%,
+    rgba(212, 175, 120, 0.08) 40%,
+    transparent 70%);
+  animation: spotGlow 6s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+#tips .glass-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes spotGlow {
+  0%   { --gx: 15%; --gy: 25%; opacity: 0.6; }
+  25%  { --gx: 75%; --gy: 15%; opacity: 1;   }
+  50%  { --gx: 85%; --gy: 70%; opacity: 0.7; }
+  75%  { --gx: 30%; --gy: 80%; opacity: 1;   }
+  100% { --gx: 50%; --gy: 40%; opacity: 0.8; }
 }
 
 .tips-list.panel-open { display: block; animation: tipIn 0.5s ease both; }
