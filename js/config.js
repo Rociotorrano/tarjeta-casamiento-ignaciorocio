@@ -35,7 +35,11 @@ const CONFIG = {
   enlaceDressCode: "",
 
   // --- Cuenta bancaria para regalos ---
-  cuentaBancaria: "XXXX XXXX XXXX XXXX",
+  cuenta: {
+    alias: "rocio.torrano.bp",
+    cbu: "0140477103690951986585",
+    cuil: "27-40063176-5"
+  },
 
   // --- Google Sheets (Confirmación) ---
   // URL del "Web App" de Google Apps Script (doPost).

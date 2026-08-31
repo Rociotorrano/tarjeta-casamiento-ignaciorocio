@@ -155,21 +155,100 @@
   }
 
   /* ---------- Burbujas que suben ---------- */
+  function createBubble(layer) {
+    const b = d.createElement("span");
+    b.className = "bubble";
+    const size = 18 + Math.random() * 48;
+    b.style.width = b.style.height = size.toFixed(1) + "px";
+    b.style.left = (Math.random() * 100).toFixed(1) + "%";
+    b.style.setProperty("--sway", (Math.random() * 60 - 30).toFixed(0) + "px");
+    b.style.setProperty("--o", (0.4 + Math.random() * 0.4).toFixed(2));
+    b.style.animationDuration = (10 + Math.random() * 14).toFixed(1) + "s";
+    b.style.animationDelay = (-Math.random() * 30).toFixed(1) + "s";
+        b.addEventListener(
+          "pointerdown",
+          function (ev) {
+            ev.preventDefault();
+            if (b.classList.contains("is-pop")) return;
+            b.classList.add("is-pop");
+            const rect = b.getBoundingClientRect();
+            const cx = ev.clientX != null ? ev.clientX : rect.left + rect.width / 2;
+            const cy = ev.clientY != null ? ev.clientY : rect.top + rect.height / 2;
+            if (typeof waterSplash === "function") {
+              waterSplash(cx, cy, size);
+            }
+            setTimeout(() => {
+              if (layer && document.body.contains(layer)) {
+                createBubble(layer);
+              }
+            }, 400);
+            b.addEventListener(
+          "animationend",
+          function () {
+            b.remove();
+          },
+          { once: true }
+        );
+      },
+      { passive: false }
+    );
+    layer.appendChild(b);
+    return b;
+  }
+
   function initBubbles() {
     const layer = d.getElementById("bubbles");
     if (!layer) return;
     const count = 18;
     for (let i = 0; i < count; i++) {
-      const b = d.createElement("span");
-      b.className = "bubble";
-      const size = 18 + Math.random() * 48;
-      b.style.width = b.style.height = size.toFixed(1) + "px";
-      b.style.left = (Math.random() * 100).toFixed(1) + "%";
-      b.style.setProperty("--sway", (Math.random() * 60 - 30).toFixed(0) + "px");
-      b.style.setProperty("--o", (0.4 + Math.random() * 0.4).toFixed(2));
-      b.style.animationDuration = (10 + Math.random() * 14).toFixed(1) + "s";
-      b.style.animationDelay = (-Math.random() * 30).toFixed(1) + "s";
-      layer.appendChild(b);
+      createBubble(layer);
+    }
+  }
+
+  /* ---------- Salpicadura de agua al explotar burbuja ---------- */
+  function waterSplash(cx, cy, bubbleSize) {
+    const layer = d.getElementById("bubbles");
+    if (!layer) return;
+    const scale = (bubbleSize || 30) / 30;
+
+    const ring = document.createElement("span");
+    ring.className = "water-ring";
+    ring.style.left = cx + "px";
+    ring.style.top = cy + "px";
+    ring.style.width = ring.style.height = (bubbleSize || 30) * 0.8 + "px";
+    layer.appendChild(ring);
+    window.setTimeout(() => ring.remove(), 700);
+
+    const puddleR = 20 + Math.random() * 15;
+    const puddle = document.createElement("span");
+    puddle.className = "water-puddle";
+    puddle.style.left = cx + "px";
+    puddle.style.top = cy + "px";
+    puddle.style.width = puddle.style.height = (puddleR * 2 * scale).toFixed(0) + "px";
+    layer.appendChild(puddle);
+    window.setTimeout(() => puddle.remove(), 900);
+
+    const drops = 20;
+    for (let i = 0; i < drops; i++) {
+      const d = document.createElement("span");
+      d.className = "water-drop";
+      const ang = (Math.random() * Math.PI * 2);
+      const spread = 0.35 + Math.random() * 0.65;
+      const gx = Math.cos(ang) * (35 + Math.random() * 90) * scale * spread;
+      const gy = (15 + Math.random() * 60) * scale;
+      const peak = -(30 + Math.random() * 70) * scale;
+      const sz = (3 + Math.random() * 6) * scale;
+      d.style.width = d.style.height = sz.toFixed(1) + "px";
+      d.style.left = cx + "px";
+      d.style.top = cy + "px";
+      d.style.setProperty("--gx", gx.toFixed(1) + "px");
+      d.style.setProperty("--peak", peak.toFixed(1) + "px");
+      d.style.setProperty("--gy", gy.toFixed(1) + "px");
+      d.style.setProperty("--dr", (Math.random() * 360).toFixed(0) + "deg");
+      d.style.animationDuration = (0.5 + Math.random() * 0.45).toFixed(2) + "s";
+      d.style.animationDelay = "0s";
+      layer.appendChild(d);
+      window.setTimeout(() => d.remove(), 1600);
     }
   }
 
@@ -628,6 +707,17 @@
     });
   }
 
+  /* ---------- Datos bancarios ---------- */
+  function initBanco() {
+    const set = (id, val) => {
+      const el = d.getElementById(id);
+      if (el && val) el.textContent = val;
+    };
+    set("gift-alias", CONFIG.cuenta && CONFIG.cuenta.alias);
+    set("gift-cbu", CONFIG.cuenta && CONFIG.cuenta.cbu);
+    set("gift-cuil", CONFIG.cuenta && CONFIG.cuenta.cuil);
+  }
+
   /* ---------- Init ---------- */
   function init() {
     initEntrada();
@@ -635,6 +725,7 @@
     initCountdown();
     initScratch();
     initBubbles();
+    initBanco();
     initPlaceholders();
     initAnimatedSections();
     initToggles();
