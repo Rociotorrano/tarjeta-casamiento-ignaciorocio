@@ -158,26 +158,40 @@
   function createBubble(layer) {
     const b = d.createElement("span");
     b.className = "bubble";
-    const size = 12 + Math.random() * 26;
+    const size = 18 + Math.random() * 48;
     b.style.width = b.style.height = size.toFixed(1) + "px";
-
-    // Solo por los costados de la invitación (no sobre el texto central)
-    const cardW = Math.min(window.innerWidth, 500);
-    const cardLeft = (window.innerWidth - cardW) / 2;
-    const edge = cardW * 0.05;
-    const leftSide = Math.random() < 0.5;
-
-    if (leftSide) {
-      b.style.left = (cardLeft + Math.random() * edge).toFixed(1) + "px";
-    } else {
-      b.style.right = (cardLeft + Math.random() * edge).toFixed(1) + "px";
-    }
-
-    const dir = leftSide ? -1 : 1;
-    b.style.setProperty("--sway", (dir * Math.random() * 14).toFixed(0) + "px");
+    b.style.left = (Math.random() * 100).toFixed(1) + "%";
+    b.style.setProperty("--sway", (Math.random() * 60 - 30).toFixed(0) + "px");
     b.style.setProperty("--o", (0.4 + Math.random() * 0.4).toFixed(2));
-    b.style.animationDuration = (12 + Math.random() * 14).toFixed(1) + "s";
+    b.style.animationDuration = (10 + Math.random() * 14).toFixed(1) + "s";
     b.style.animationDelay = (-Math.random() * 30).toFixed(1) + "s";
+        b.addEventListener(
+          "pointerdown",
+          function (ev) {
+            ev.preventDefault();
+            if (b.classList.contains("is-pop")) return;
+            b.classList.add("is-pop");
+            const rect = b.getBoundingClientRect();
+            const cx = ev.clientX != null ? ev.clientX : rect.left + rect.width / 2;
+            const cy = ev.clientY != null ? ev.clientY : rect.top + rect.height / 2;
+            if (typeof waterSplash === "function") {
+              waterSplash(cx, cy, size);
+            }
+            setTimeout(() => {
+              if (layer && document.body.contains(layer)) {
+                createBubble(layer);
+              }
+            }, 400);
+            b.addEventListener(
+          "animationend",
+          function () {
+            b.remove();
+          },
+          { once: true }
+        );
+      },
+      { passive: false }
+    );
     layer.appendChild(b);
     return b;
   }
@@ -185,9 +199,56 @@
   function initBubbles() {
     const layer = d.getElementById("bubbles");
     if (!layer) return;
-    const count = 12;
+    const count = 18;
     for (let i = 0; i < count; i++) {
       createBubble(layer);
+    }
+  }
+
+  /* ---------- Salpicadura de agua al explotar burbuja ---------- */
+  function waterSplash(cx, cy, bubbleSize) {
+    const layer = d.getElementById("bubbles");
+    if (!layer) return;
+    const scale = (bubbleSize || 30) / 30;
+
+    const ring = document.createElement("span");
+    ring.className = "water-ring";
+    ring.style.left = cx + "px";
+    ring.style.top = cy + "px";
+    ring.style.width = ring.style.height = (bubbleSize || 30) * 0.8 + "px";
+    layer.appendChild(ring);
+    window.setTimeout(() => ring.remove(), 700);
+
+    const puddleR = 20 + Math.random() * 15;
+    const puddle = document.createElement("span");
+    puddle.className = "water-puddle";
+    puddle.style.left = cx + "px";
+    puddle.style.top = cy + "px";
+    puddle.style.width = puddle.style.height = (puddleR * 2 * scale).toFixed(0) + "px";
+    layer.appendChild(puddle);
+    window.setTimeout(() => puddle.remove(), 900);
+
+    const drops = 20;
+    for (let i = 0; i < drops; i++) {
+      const d = document.createElement("span");
+      d.className = "water-drop";
+      const ang = (Math.random() * Math.PI * 2);
+      const spread = 0.35 + Math.random() * 0.65;
+      const gx = Math.cos(ang) * (35 + Math.random() * 90) * scale * spread;
+      const gy = (15 + Math.random() * 60) * scale;
+      const peak = -(30 + Math.random() * 70) * scale;
+      const sz = (3 + Math.random() * 6) * scale;
+      d.style.width = d.style.height = sz.toFixed(1) + "px";
+      d.style.left = cx + "px";
+      d.style.top = cy + "px";
+      d.style.setProperty("--gx", gx.toFixed(1) + "px");
+      d.style.setProperty("--peak", peak.toFixed(1) + "px");
+      d.style.setProperty("--gy", gy.toFixed(1) + "px");
+      d.style.setProperty("--dr", (Math.random() * 360).toFixed(0) + "deg");
+      d.style.animationDuration = (0.5 + Math.random() * 0.45).toFixed(2) + "s";
+      d.style.animationDelay = "0s";
+      layer.appendChild(d);
+      window.setTimeout(() => d.remove(), 1600);
     }
   }
 
@@ -351,6 +412,20 @@
     d.querySelectorAll("[data-animate]").forEach((s) => io.observe(s));
   }
 
+  /* ---------- Acordeones "Ver más" ---------- */
+  function initToggles() {
+    d.querySelectorAll(".toggle-btn").forEach((btn) => {
+      const target = d.getElementById(btn.dataset.toggle);
+      if (!target) return;
+      const more = btn.dataset.more || "Ver más";
+      const less = btn.dataset.less || "Ver menos";
+      btn.addEventListener("click", () => {
+        const open = target.classList.toggle("panel-open");
+        btn.textContent = open ? less : more;
+      });
+    });
+  }
+
   /* ---------- Copiar cuenta bancaria ---------- */
   function initCopy() {
     d.querySelectorAll("[data-copy]").forEach((btn) => {
@@ -454,7 +529,6 @@
     const cambiar = d.getElementById("rsvp-cambiar");
     const done = d.getElementById("rsvp-done");
     const doneText = d.getElementById("rsvp-done-text");
-    const datoLabel = d.getElementById("rsvp-dato-label");
 
     let respuesta = "";
 
@@ -467,7 +541,6 @@
           ? "¡Te esperamos! Ingresá tu nombre para confirmar."
           : "Lamentamos no poder contar con vos. Ingresá tu nombre para avisar.";
         if (dato) dato.hidden = !esSi;
-        if (datoLabel) datoLabel.hidden = !esSi;
         options.hidden = true;
         form.hidden = false;
         nombre.focus();
@@ -490,10 +563,7 @@
       submit.disabled = true;
       submit.innerHTML = '<span class="spinner"></span> Enviando…';
 
-      let restriccion = "";
-      if (respuesta === "si" && dato) {
-        restriccion = dato.value.trim();
-      }
+      const dato = (d.getElementById("rsvp-dato").value || "").trim();
 
       const payload = {
         nombre: name,
@@ -502,7 +572,7 @@
           respuesta === "si"
             ? "¡Sí confirmo! asistirá a la celebración"
             : "No podrá asistir",
-        dato: restriccion,
+        dato: dato,
         fecha: new Date().toLocaleString("es-AR", {
           dateStyle: "short",
           timeStyle: "medium",
@@ -648,245 +718,8 @@
     set("gift-cuil", CONFIG.cuenta && CONFIG.cuenta.cuil);
   }
 
-  /* ---------- Control de acceso (link personal + PIN / un solo uso) ---------- */
-  /* Dos formatos de token:
-   * A) herramientas/generar-links.html  ->  BASE64URL(nombre).HASH(nombre|pin)   (PIN local)
-   * B) Apps Script (hoja "Invitados")    ->  token aleatorio                        (PIN en backend)
-   */
-  function hashStr(str) {
-    let h = 0;
-    for (let i = 0; i < str.length; i++) {
-      h = ((h << 5) - h + str.charCodeAt(i)) | 0;
-    }
-    return Math.abs(h).toString(36);
-  }
-
-  function b64urlDecode(str) {
-    try {
-      const b = str.replace(/-/g, "+").replace(/_/g, "/");
-      const pad = b.length % 4;
-      const padded = pad ? b + "=".repeat(4 - pad) : b;
-      const bin = atob(padded);
-      const bytes = new Uint8Array(bin.length);
-      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      return new TextDecoder().decode(bytes);
-    } catch (err) {
-      return null;
-    }
-  }
-
-  function decodeTokenLocal(token) {
-    const idx = token.lastIndexOf(".");
-    if (idx <= 0 || idx === token.length - 1) return null;
-    const nombre = b64urlDecode(token.slice(0, idx));
-    const hash = token.slice(idx + 1);
-    if (!nombre || !hash) return null;
-    return { nombre: nombre, hash: hash };
-  }
-
-  function verificarPinLocal(token, local, pin) {
-    return hashStr(local.nombre.toLowerCase().trim() + "|" + pin) === local.hash;
-  }
-
-  function initGate(onPass) {
-    const gate = d.getElementById("gate");
-    if (!CONFIG.enlacesUnicos || !gate) {
-      onPass();
-      return;
-    }
-
-    const msg = d.getElementById("gate-msg");
-    const guest = d.getElementById("gate-guest");
-    const openBtn = d.getElementById("gate-open");
-    const pinForm = d.getElementById("gate-pin-form");
-    const pinInput = d.getElementById("gate-pin");
-    const pinError = d.getElementById("gate-pin-error");
-    const pinSubmit = d.getElementById("gate-pin-submit");
-    const token = new URLSearchParams(location.search).get("t") || "";
-    const storageKey = "inv_ok_" + token;
-
-    function guardarValidacion() {
-      try {
-        localStorage.setItem(storageKey, "1");
-      } catch (err) {}
-    }
-
-    function yaValidado() {
-      try {
-        return localStorage.getItem(storageKey) === "1";
-      } catch (err) {
-        return false;
-      }
-    }
-
-    function showGate(text, showBtn) {
-      gate.hidden = false;
-      d.body.classList.add("no-scroll");
-      if (msg) msg.textContent = text;
-      if (openBtn) openBtn.hidden = !showBtn;
-      if (pinForm) pinForm.hidden = true;
-    }
-
-    function showError(text) {
-      if (!pinError) return;
-      pinError.textContent = text;
-      pinError.hidden = false;
-      pinError.classList.remove("shake");
-      void pinError.offsetWidth;
-      pinError.classList.add("shake");
-    }
-
-    function hideError() {
-      if (pinError) pinError.hidden = true;
-    }
-
-    function pass() {
-      gate.hidden = true;
-      d.body.classList.remove("no-scroll");
-      onPass();
-    }
-
-    function mostrarFormularioPin(nombre) {
-      if (guest && nombre) {
-        guest.textContent = "Para: " + nombre;
-        guest.hidden = false;
-      }
-      if (msg) msg.textContent = "Ingresá tu código de acceso para abrir la invitación.";
-      if (openBtn) openBtn.hidden = true;
-      if (pinForm) pinForm.hidden = false;
-      if (pinInput) {
-        pinInput.value = "";
-        pinInput.focus();
-      }
-    }
-
-    function mensajeUsado() {
-      showGate(
-        "Este link ya fue utilizado. Si necesitás ver la invitación de nuevo, escribinos y te enviamos uno nuevo.",
-        false
-      );
-    }
-
-    function mensajeInvalido() {
-      showGate(
-        "El link no es válido. Fijate que sea el link personalizado que te enviamos.",
-        false
-      );
-    }
-
-    /* Sin token: mensaje genérico */
-    if (!token) {
-      showGate(
-        "Esta invitación es personal. Abrilo con el link que te enviamos por WhatsApp.",
-        false
-      );
-      return;
-    }
-
-    /* Este dispositivo ya validó antes: se permite sin verificar de nuevo. */
-    if (yaValidado()) {
-      pass();
-      return;
-    }
-
-    /* --- Token formato local (generado con generar-links.html) --- */
-    const local = decodeTokenLocal(token);
-    if (local) {
-      showGate("Verificando tu invitaci\u00f3n\u2026", false);
-      mostrarFormularioPin(local.nombre);
-    } else {
-      /* --- Token de backend (hoja "Invitados" del Apps Script) --- */
-      if (!CONFIG.appsScriptURL) {
-        showGate("Modo demo: la verificación no está conectada todavía.", true);
-        openBtn.addEventListener("click", () => pass());
-        return;
-      }
-
-      showGate("Verificando tu invitaci\u00f3n\u2026", false);
-      fetch(CONFIG.appsScriptURL + "?t=" + encodeURIComponent(token))
-        .then((r) => r.json())
-        .then((res) => {
-          if (res && res.ok) {
-            mostrarFormularioPin(res.nombre || "");
-          } else if (res && res.error === "usado") {
-            mensajeUsado();
-          } else {
-            mensajeInvalido();
-          }
-        })
-        .catch(() => {
-          showGate(
-            "No pudimos verificar tu invitación. Revisá tu conexión e intentá de nuevo.",
-            false
-          );
-        });
-    }
-
-    /* --- Verificación del PIN --- */
-    if (pinForm) {
-      pinForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const pin = (pinInput ? pinInput.value : "").trim();
-        if (!pin) {
-          if (pinInput) pinInput.focus();
-          return;
-        }
-
-        hideError();
-        pinSubmit.disabled = true;
-        pinSubmit.innerHTML = '<span class="spinner"></span> Verificando\u2026';
-
-        const resolver = (ok, errorCodigo) => {
-          if (ok) {
-            guardarValidacion();
-            pass();
-          } else if (errorCodigo === "usado") {
-            mensajeUsado();
-          } else {
-            showError("El código es incorrecto. Intentá de nuevo.");
-            pinSubmit.disabled = false;
-            pinSubmit.textContent = "Verificar";
-            if (pinInput) {
-              pinInput.value = "";
-              pinInput.focus();
-            }
-          }
-        };
-
-        if (local) {
-          /* Verificación local: el hash viene en el propio link */
-          window.setTimeout(() => {
-            resolver(
-              verificarPinLocal(token, local, pin),
-              "pin_incorrecto"
-            );
-          }, 400);
-        } else {
-          /* Verificación en backend: Apps Script consume el link */
-          fetch(CONFIG.appsScriptURL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "verificarPin", token: token, pin: pin })
-          })
-            .then((r) => r.json())
-            .then((res) => {
-              resolver(
-                !!(res && res.ok),
-                res && res.error
-              );
-            })
-            .catch(() => {
-              showError("Error de conexión. Revisá tu internet e intentá de nuevo.");
-              pinSubmit.disabled = false;
-              pinSubmit.textContent = "Verificar";
-            });
-        }
-      });
-    }
-  }
-
   /* ---------- Init ---------- */
-  function startExperience() {
+  function init() {
     initEntrada();
     initReveal();
     initCountdown();
@@ -895,6 +728,7 @@
     initBanco();
     initPlaceholders();
     initAnimatedSections();
+    initToggles();
     initCopy();
     initGalleryNav();
     initGallery();
@@ -905,10 +739,6 @@
     d.querySelectorAll("#portada .reveal").forEach((el) =>
       el.classList.add("is-visible")
     );
-  }
-
-  function init() {
-    initGate(startExperience);
   }
 
   if (document.readyState === "loading") {
