@@ -48,5 +48,5 @@ const CONFIG = {
   appsScriptURL: "https://script.google.com/macros/s/AKfycbwOd7dCLnQqSqBkGylNbinEuGUP8Q_Vfqr4T0WRALmWSwFoJtAHmoDlYEIKqprqfLSd/exec",
 
   // Nombre de la pestaña/hoja (cambialo si tu hoja se llama distinto)
-  hojaGoogle: "Confirmaciones"
+  hojaGoogle: "Confirmaciones",
 };
