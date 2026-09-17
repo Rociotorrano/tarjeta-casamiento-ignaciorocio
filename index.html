@@ -12,6 +12,29 @@
 </head>
 <body>
 
+  <!-- ===== CONTROL DE ACCESO (link personal / un solo uso con PIN) ===== -->
+  <div id="gate" class="gate" hidden>
+    <div class="gate-card">
+      <svg class="gate-lock" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="10" y="21" width="28" height="20" rx="4" />
+        <path d="M17 21v-6a7 7 0 0 1 14 0v6" />
+        <circle cx="24" cy="31" r="3" />
+      </svg>
+      <p class="gate-eyebrow">Invitación personal</p>
+      <h2 class="gate-title" id="gate-title">Ignacio &amp; Rocio</h2>
+      <p class="gate-guest" id="gate-guest" hidden></p>
+      <p class="gate-msg" id="gate-msg">Verificando tu invitación&hellip;</p>
+      <button class="btn solid" id="gate-open" hidden>Abrir mi invitación</button>
+      <!-- PIN -->
+      <form id="gate-pin-form" class="gate-pin-form" hidden>
+        <p class="gate-pin-label">Ingresá tu código de acceso</p>
+        <input type="password" id="gate-pin" class="input gate-pin-input" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="PIN" autocomplete="off" required />
+        <p class="gate-pin-error" id="gate-pin-error" hidden></p>
+        <button type="submit" class="btn solid" id="gate-pin-submit">Verificar</button>
+      </form>
+    </div>
+  </div>
+
   <!-- ===== VIDEO DE FONDO (loop) ===== -->
   <video id="bg-video" src="fondo (2).mp4" muted autoplay loop playsinline webkit-playsinline preload="auto" aria-hidden="true"></video>
 
@@ -93,13 +116,6 @@
     </div>
   </section>
 
-  <!-- ===== ITINERARIO ===== -->
-  <section id="itinerario" class="section cream">
-    <div class="section-inner">
-      <img class="itinerario-img reveal" src="assets/Itinerario.jpg" alt="Itinerario del casamiento" />
-    </div>
-  </section>
-
   <!-- ===== CIVIL ===== -->
   <section id="civil" class="section dark video-bg glass-card-section">
     <div class="section-inner glass-card">
@@ -168,7 +184,7 @@
         <button class="g-nav" id="g-prev" aria-label="Anterior">‹</button>
         <button class="g-nav" id="g-next" aria-label="Siguiente">›</button>
       </div>
-      <p class="gallery-hint reveal">Deslizá para ver las fotos</p>
+      <p class="gallery-hint reveal">Tocá para agrandar las fotos</p>
     </div>
   </section>
 
@@ -195,9 +211,7 @@
       </div>
       <p class="section-sub reveal">Te dejamos algunos colores de sugerencia</p>
 
-      <button class="btn solid reveal toggle-btn" data-toggle="dress-panel" data-more="Ver más" data-less="Ver menos">Ver más</button>
-
-      <div class="panel panel-soft" id="dress-panel">
+      <div class="panel panel-soft panel-open" id="dress-panel">
         <p class="palette-title">Paleta de colores</p>
         <ul class="palette">
           <li><span class="swatch" style="--c:#161616"></span>Negro</li>
@@ -245,12 +259,9 @@
       <h2 class="section-title reveal">Información adicional<br />a considerar</h2>
       <ul class="tips-list reveal" id="tips-list">
         <li><span class="tip-mark">+</span> Por favor, ¡ser puntuales!</li>
-        <li class="tip-extra"><span class="tip-mark">+</span> Llevar abrigo para disfrutar de los espacios exteriores.</li>
         <li class="tip-extra"><span class="tip-mark">+</span> Llevar taco bajo o con plataforma, ya que la entrada del salon es pasto.</li>
                 <li class="tip-extra"><span class="tip-mark">+</span> Llevar toallon/muda de ropa por si queres disfrutar de la pileta.</li>
-        <li class="tip-extra"><span class="tip-mark">+</span> Olvidarse de todo y disfrutar!!!</li>
       </ul>
-      <button class="btn outline reveal toggle-btn" data-toggle="tips-list" data-more="Ver tips" data-less="Ver menos">Ver tips</button>
     </div>
   </section>
 
@@ -283,9 +294,8 @@
       <p class="section-eyebrow reveal">Regalos</p>
       <h2 class="section-title reveal">Tu presencia es nuestro mejor regalo</h2>
       <p class="section-sub reveal">Si querés hacernos un presente, podés colaborar con nuestra luna de miel</p>
-      <button class="btn solid reveal toggle-btn" data-toggle="gift-panel" data-more="Ver más" data-less="Ver menos">Ver más</button>
 
-      <div class="panel panel-gift" id="gift-panel">
+      <div class="panel panel-gift panel-open" id="gift-panel">
         <p class="gift-label">Alias</p>
         <p class="gift-account gift-small" id="gift-alias">Cargando&hellip;</p>
         <button class="btn solid copy-btn" data-copy="gift-alias">Copiar alias</button>
@@ -335,7 +345,13 @@
         <form id="rsvp-form" class="rsvp-form" hidden>
           <p class="rsvp-choice" id="rsvp-choice"></p>
           <input type="text" id="rsvp-nombre" class="input" placeholder="Ingresá tu nombre completo" required autocomplete="name" />
-          <input type="text" id="rsvp-dato" class="input" placeholder="Dato importante (ejemplo: celíaco)" autocomplete="off" />
+          <label id="rsvp-dato-label" class="rsvp-select-label" for="rsvp-dato">¿Tenés alguna restricción alimentaria?</label>
+          <select id="rsvp-dato" class="input select" autocomplete="off">
+            <option value="">Seleccioná una opción</option>
+            <option value="Celíaco">Celíaco</option>
+            <option value="Vegetariano">Vegetariano</option>
+            <option value="Sin restricciones">Sin restricciones</option>
+          </select>
           <p class="rsvp-note" id="rsvp-note"></p>
           <button type="submit" class="btn solid" id="rsvp-submit">Enviar confirmación</button>
           <button type="button" class="btn link" id="rsvp-cambiar">Cambiar respuesta</button>

@@ -48,5 +48,14 @@ const CONFIG = {
   appsScriptURL: "https://script.google.com/macros/s/AKfycbwOd7dCLnQqSqBkGylNbinEuGUP8Q_Vfqr4T0WRALmWSwFoJtAHmoDlYEIKqprqfLSd/exec",
 
   // Nombre de la pestaña/hoja (cambialo si tu hoja se llama distinto)
-  hojaGoogle: "Confirmaciones"
+  hojaGoogle: "Confirmaciones",
+
+  // --- Links personales de un solo uso con PIN ---
+  // false = cualquiera con el enlace puede abrir la invitación (comportamiento normal).
+  // true  = solo se abre con un link personalizado (?t=TOKEN), cada link
+  //         sirve una sola vez (primera apertura) y requiere PIN numérico.
+  //         Requiere:
+  //         1) crear la hoja "Invitados" y actualizar el Apps Script (ver GOOGLE_SHEETS.md)
+  //         2) generar links con generar-links.html y enviar el link + PIN por WhatsApp
+  enlacesUnicos: true,
 };
