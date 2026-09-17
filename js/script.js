@@ -158,26 +158,40 @@
   function createBubble(layer) {
     const b = d.createElement("span");
     b.className = "bubble";
-    const size = 12 + Math.random() * 26;
+    const size = 18 + Math.random() * 48;
     b.style.width = b.style.height = size.toFixed(1) + "px";
-
-    // Solo por los costados de la invitación (no sobre el texto central)
-    const cardW = Math.min(window.innerWidth, 500);
-    const cardLeft = (window.innerWidth - cardW) / 2;
-    const edge = cardW * 0.05;
-    const leftSide = Math.random() < 0.5;
-
-    if (leftSide) {
-      b.style.left = (cardLeft + Math.random() * edge).toFixed(1) + "px";
-    } else {
-      b.style.right = (cardLeft + Math.random() * edge).toFixed(1) + "px";
-    }
-
-    const dir = leftSide ? -1 : 1;
-    b.style.setProperty("--sway", (dir * Math.random() * 14).toFixed(0) + "px");
+    b.style.left = (Math.random() * 100).toFixed(1) + "%";
+    b.style.setProperty("--sway", (Math.random() * 60 - 30).toFixed(0) + "px");
     b.style.setProperty("--o", (0.4 + Math.random() * 0.4).toFixed(2));
-    b.style.animationDuration = (12 + Math.random() * 14).toFixed(1) + "s";
+    b.style.animationDuration = (10 + Math.random() * 14).toFixed(1) + "s";
     b.style.animationDelay = (-Math.random() * 30).toFixed(1) + "s";
+        b.addEventListener(
+          "pointerdown",
+          function (ev) {
+            ev.preventDefault();
+            if (b.classList.contains("is-pop")) return;
+            b.classList.add("is-pop");
+            const rect = b.getBoundingClientRect();
+            const cx = ev.clientX != null ? ev.clientX : rect.left + rect.width / 2;
+            const cy = ev.clientY != null ? ev.clientY : rect.top + rect.height / 2;
+            if (typeof waterSplash === "function") {
+              waterSplash(cx, cy, size);
+            }
+            setTimeout(() => {
+              if (layer && document.body.contains(layer)) {
+                createBubble(layer);
+              }
+            }, 400);
+            b.addEventListener(
+          "animationend",
+          function () {
+            b.remove();
+          },
+          { once: true }
+        );
+      },
+      { passive: false }
+    );
     layer.appendChild(b);
     return b;
   }
@@ -185,9 +199,56 @@
   function initBubbles() {
     const layer = d.getElementById("bubbles");
     if (!layer) return;
-    const count = 12;
+    const count = 18;
     for (let i = 0; i < count; i++) {
       createBubble(layer);
+    }
+  }
+
+  /* ---------- Salpicadura de agua al explotar burbuja ---------- */
+  function waterSplash(cx, cy, bubbleSize) {
+    const layer = d.getElementById("bubbles");
+    if (!layer) return;
+    const scale = (bubbleSize || 30) / 30;
+
+    const ring = document.createElement("span");
+    ring.className = "water-ring";
+    ring.style.left = cx + "px";
+    ring.style.top = cy + "px";
+    ring.style.width = ring.style.height = (bubbleSize || 30) * 0.8 + "px";
+    layer.appendChild(ring);
+    window.setTimeout(() => ring.remove(), 700);
+
+    const puddleR = 20 + Math.random() * 15;
+    const puddle = document.createElement("span");
+    puddle.className = "water-puddle";
+    puddle.style.left = cx + "px";
+    puddle.style.top = cy + "px";
+    puddle.style.width = puddle.style.height = (puddleR * 2 * scale).toFixed(0) + "px";
+    layer.appendChild(puddle);
+    window.setTimeout(() => puddle.remove(), 900);
+
+    const drops = 20;
+    for (let i = 0; i < drops; i++) {
+      const d = document.createElement("span");
+      d.className = "water-drop";
+      const ang = (Math.random() * Math.PI * 2);
+      const spread = 0.35 + Math.random() * 0.65;
+      const gx = Math.cos(ang) * (35 + Math.random() * 90) * scale * spread;
+      const gy = (15 + Math.random() * 60) * scale;
+      const peak = -(30 + Math.random() * 70) * scale;
+      const sz = (3 + Math.random() * 6) * scale;
+      d.style.width = d.style.height = sz.toFixed(1) + "px";
+      d.style.left = cx + "px";
+      d.style.top = cy + "px";
+      d.style.setProperty("--gx", gx.toFixed(1) + "px");
+      d.style.setProperty("--peak", peak.toFixed(1) + "px");
+      d.style.setProperty("--gy", gy.toFixed(1) + "px");
+      d.style.setProperty("--dr", (Math.random() * 360).toFixed(0) + "deg");
+      d.style.animationDuration = (0.5 + Math.random() * 0.45).toFixed(2) + "s";
+      d.style.animationDelay = "0s";
+      layer.appendChild(d);
+      window.setTimeout(() => d.remove(), 1600);
     }
   }
 
@@ -351,6 +412,20 @@
     d.querySelectorAll("[data-animate]").forEach((s) => io.observe(s));
   }
 
+  /* ---------- Acordeones "Ver más" ---------- */
+  function initToggles() {
+    d.querySelectorAll(".toggle-btn").forEach((btn) => {
+      const target = d.getElementById(btn.dataset.toggle);
+      if (!target) return;
+      const more = btn.dataset.more || "Ver más";
+      const less = btn.dataset.less || "Ver menos";
+      btn.addEventListener("click", () => {
+        const open = target.classList.toggle("panel-open");
+        btn.textContent = open ? less : more;
+      });
+    });
+  }
+
   /* ---------- Copiar cuenta bancaria ---------- */
   function initCopy() {
     d.querySelectorAll("[data-copy]").forEach((btn) => {
@@ -454,7 +529,6 @@
     const cambiar = d.getElementById("rsvp-cambiar");
     const done = d.getElementById("rsvp-done");
     const doneText = d.getElementById("rsvp-done-text");
-    const datoLabel = d.getElementById("rsvp-dato-label");
 
     let respuesta = "";
 
@@ -467,7 +541,6 @@
           ? "¡Te esperamos! Ingresá tu nombre para confirmar."
           : "Lamentamos no poder contar con vos. Ingresá tu nombre para avisar.";
         if (dato) dato.hidden = !esSi;
-        if (datoLabel) datoLabel.hidden = !esSi;
         options.hidden = true;
         form.hidden = false;
         nombre.focus();
@@ -490,10 +563,7 @@
       submit.disabled = true;
       submit.innerHTML = '<span class="spinner"></span> Enviando…';
 
-      let restriccion = "";
-      if (respuesta === "si" && dato) {
-        restriccion = dato.value.trim();
-      }
+      const dato = (d.getElementById("rsvp-dato").value || "").trim();
 
       const payload = {
         nombre: name,
@@ -502,7 +572,7 @@
           respuesta === "si"
             ? "¡Sí confirmo! asistirá a la celebración"
             : "No podrá asistir",
-        dato: restriccion,
+        dato: dato,
         fecha: new Date().toLocaleString("es-AR", {
           dateStyle: "short",
           timeStyle: "medium",
@@ -648,106 +718,8 @@
     set("gift-cuil", CONFIG.cuenta && CONFIG.cuenta.cuil);
   }
 
-  /* ---------- Control de acceso (link personal / un solo uso) ---------- */
-  function initGate(onPass) {
-    const gate = d.getElementById("gate");
-    if (!CONFIG.enlacesUnicos || !gate) {
-      onPass();
-      return;
-    }
-
-    const msg = d.getElementById("gate-msg");
-    const guest = d.getElementById("gate-guest");
-    const openBtn = d.getElementById("gate-open");
-    const token = new URLSearchParams(location.search).get("t") || "";
-    const storageKey = "inv_unico_" + token;
-
-    function showGate(text, showBtn) {
-      gate.hidden = false;
-      d.body.classList.add("no-scroll");
-      if (msg) msg.textContent = text;
-      if (openBtn) openBtn.hidden = !showBtn;
-    }
-
-    function pass() {
-      gate.hidden = true;
-      d.body.classList.remove("no-scroll");
-      onPass();
-    }
-
-    if (!token) {
-      showGate(
-        "Esta invitación es personal. Abrilo con el link que te enviamos por WhatsApp.",
-        false
-      );
-      return;
-    }
-
-    // Este dispositivo ya validó el link antes: se permite sin gastarlo de nuevo.
-    let yaValidado = false;
-    try {
-      yaValidado = localStorage.getItem(storageKey) === "1";
-    } catch (err) {
-      yaValidado = false;
-    }
-    if (yaValidado) {
-      pass();
-      return;
-    }
-
-    // Sin backend configurado: modo demo (se permite abrir).
-    if (!CONFIG.appsScriptURL) {
-      showGate("Modo demo: la verificación no está conectada todavía.", true);
-      openBtn.addEventListener("click", () => {
-        try {
-          localStorage.setItem(storageKey, "1");
-        } catch (err) {}
-        pass();
-      });
-      return;
-    }
-
-    showGate("¡Hola! Tocá el botón para abrir tu invitación personal.", true);
-    openBtn.addEventListener("click", () => {
-      openBtn.disabled = true;
-      openBtn.innerHTML = '<span class="spinner"></span> Verificando…';
-      fetch(CONFIG.appsScriptURL + "?t=" + encodeURIComponent(token))
-        .then((r) => r.json())
-        .then((res) => {
-          if (res && res.ok) {
-            try {
-              localStorage.setItem(storageKey, "1");
-            } catch (err) {}
-            if (res.nombre && guest) {
-              guest.textContent = "Para: " + res.nombre;
-              guest.hidden = false;
-            }
-            pass();
-          } else if (res && res.error === "usado") {
-            showGate(
-              "Este link ya fue utilizado. Si necesitás ver la invitación de nuevo, escribinos y te enviamos uno nuevo.",
-              false
-            );
-          } else {
-            showGate(
-              "El link no es válido. Fijate que sea el link personalizado que te enviamos.",
-              false
-            );
-          }
-        })
-        .catch(() => {
-          openBtn.disabled = false;
-          openBtn.textContent = "Reintentar";
-          if (msg) {
-            msg.textContent =
-              "No pudimos verificar tu invitación. Revisá tu conexión e intentá de nuevo.";
-          }
-        });
-    });
-  }
-
   /* ---------- Init ---------- */
-  function startExperience() {
+  function init() {
     initEntrada();
     initReveal();
     initCountdown();
@@ -756,6 +728,7 @@
     initBanco();
     initPlaceholders();
     initAnimatedSections();
+    initToggles();
     initCopy();
     initGalleryNav();
     initGallery();
@@ -766,10 +739,6 @@
     d.querySelectorAll("#portada .reveal").forEach((el) =>
       el.classList.add("is-visible")
     );
-  }
-
-  function init() {
-    initGate(startExperience);
   }
 
   if (document.readyState === "loading") {
