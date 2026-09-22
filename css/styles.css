@@ -938,7 +938,7 @@ img { display: block; max-width: 100%; }
 .icon-camera {
   width: 68px;
   height: 68px;
-  color: var(--gold-light);
+  color: var(--gold);
   transform-origin: 50% 92%;
   animation: camSwing 3s ease-in-out infinite;
 }
