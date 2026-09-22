@@ -417,6 +417,7 @@ img { display: block; max-width: 100%; }
 .gallery::-webkit-scrollbar { display: none; }
 
 .g-item {
+  position: relative;
   flex: 0 0 78%;
   scroll-snap-align: center;
   border-radius: 14px;
@@ -433,6 +434,34 @@ img { display: block; max-width: 100%; }
 }
 
 .g-item:active img { transform: scale(1.06); }
+
+/* Velo pixeleado sobre la primera foto */
+.g-item:first-child::after {
+  content: "Toque para agrandar";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  color: #ffffff;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  line-height: 1.4;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  background:
+    repeating-conic-gradient(rgba(255, 255, 255, 0.06) 0% 25%, rgba(0, 0, 0, 0.06) 0% 50%) 0 0 / 10px 10px,
+    rgba(120, 120, 120, 0.42);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  pointer-events: none;
+}
 
 .gallery-nav {
   display: flex;
