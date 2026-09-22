@@ -15,7 +15,7 @@
 
 [hidden] { display: none !important; }
 
-html { scroll-behavior: smooth; background: #610202; }
+html { scroll-behavior: smooth; background: #610202 url("../assets/fondo.jpeg") center / cover no-repeat; }
 
 body {
   font-family: var(--serif);
@@ -68,6 +68,15 @@ img { display: block; max-width: 100%; }
 .section { padding: 0; text-align: center; position: relative; }
 
 .section.cream, .section.dark { background: var(--gold); color: var(--text-on-cream); }
+
+/* Imagen de fondo solo donde el fondo es bordo (las secciones con video quedan como estan) */
+.section.cream:not(.video-bg),
+.section.dark:not(.video-bg),
+.cover:not(.video-bg) {
+  background-image: url("../assets/fondo.jpeg");
+  background-size: cover;
+  background-position: center;
+}
 
 /* ====== PERLAS EN ESQUINAS ====== */
 .perla-corner {
