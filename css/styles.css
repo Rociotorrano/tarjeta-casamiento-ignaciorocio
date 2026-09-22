@@ -76,6 +76,7 @@ img { display: block; max-width: 100%; }
   background-image: url("../assets/fondo.jpeg");
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
 }
 
 /* Texto en bordo en las secciones con fondo claro (la imagen) */
