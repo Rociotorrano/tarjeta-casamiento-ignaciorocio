@@ -78,6 +78,68 @@ img { display: block; max-width: 100%; }
   background-position: center;
 }
 
+/* Texto en bordo en las secciones con fondo claro (la imagen) */
+.section.cream:not(.video-bg),
+.section.dark:not(.video-bg) {
+  color: var(--gold);
+}
+
+.section.cream:not(.video-bg) .section-eyebrow,
+.section.dark:not(.video-bg) .section-eyebrow,
+.section.cream:not(.video-bg) .section-eyebrow.gold,
+.section.dark:not(.video-bg) .section-eyebrow.gold {
+  color: var(--gold);
+}
+
+/* Cuenta regresiva */
+.section.cream:not(.video-bg) .cd-box,
+.section.dark:not(.video-bg) .cd-box {
+  color: var(--gold);
+  border-color: rgba(97, 2, 2, 0.4);
+}
+.section.cream:not(.video-bg) .cd-num,
+.section.dark:not(.video-bg) .cd-num {
+  color: var(--gold);
+}
+
+/* Galería */
+.section.dark:not(.video-bg) .g-nav {
+  color: var(--gold);
+  border-color: rgba(97, 2, 2, 0.4);
+}
+.section.dark:not(.video-bg) .g-nav:active {
+  background: var(--gold);
+  color: #fcfcfc;
+}
+.section.dark:not(.video-bg) .gallery-hint {
+  color: var(--gold);
+}
+
+/* Regalos */
+.section.cream:not(.video-bg) .panel,
+.section.dark:not(.video-bg) .panel,
+.section.cream:not(.video-bg) .gift-label,
+.section.dark:not(.video-bg) .gift-label,
+.section.cream:not(.video-bg) .gift-account,
+.section.dark:not(.video-bg) .gift-account {
+  color: var(--gold);
+}
+
+/* Invitación exclusiva */
+.section.cream:not(.video-bg) .icon-lock,
+.section.dark:not(.video-bg) .icon-lock {
+  color: var(--gold);
+}
+
+/* Confirmación */
+.section.dark:not(.video-bg) .confirm-card,
+.section.dark:not(.video-bg) .confirm-card .confirm-date,
+.section.dark:not(.video-bg) .confirm-card .rsvp-choice,
+.section.dark:not(.video-bg) .confirm-card .rsvp-select-label,
+.section.dark:not(.video-bg) .confirm-card .rsvp-done-title {
+  color: var(--gold);
+}
+
 /* ====== PERLAS EN ESQUINAS ====== */
 .perla-corner {
   position: absolute;
@@ -1286,30 +1348,8 @@ body.no-scroll { overflow: hidden; }
   transform: none;
 }
 
-/* ====== DIVISOR DE FLORES ====== */
-.section::after,
-.cover::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 180px;
-  background-image: url("../assets/bordes.png"), url("../assets/bordes.png");
-  background-size: 100% auto, 100% auto;
-  background-position: top center, bottom center;
-  background-repeat: no-repeat, no-repeat;
-  pointer-events: none;
-}
-
-.section:last-of-type::after {
-  display: none;
-}
-
 @media (min-width: 500px) {
   .section-title { font-size: 44px; }
-  .section::after,
-  .cover::after {
-    height: 210px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
