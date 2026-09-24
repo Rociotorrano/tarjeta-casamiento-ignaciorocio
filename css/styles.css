@@ -141,6 +141,19 @@ img { display: block; max-width: 100%; }
   color: var(--gold);
 }
 
+.section.cream:not(.video-bg) .confirm-card,
+.section.cream:not(.video-bg) .confirm-card .section-sub,
+.section.cream:not(.video-bg) .confirm-card .gift-label,
+.section.cream:not(.video-bg) .confirm-card .gift-account {
+  color: var(--gold);
+}
+
+#exclusiva .section-arrow {
+  stroke: var(--gold);
+  display: block;
+  margin: 16px auto 0;
+}
+
 /* ====== PERLAS EN ESQUINAS ====== */
 .perla-corner {
   position: absolute;
