@@ -132,13 +132,6 @@ img { display: block; max-width: 100%; }
   color: var(--gold);
 }
 
-#exclusiva .section-sub {
-  font-size: 38px;
-  font-style: normal;
-  line-height: 1.15;
-  opacity: 1;
-}
-
 /* Confirmación */
 .section.dark:not(.video-bg) .confirm-card,
 .section.dark:not(.video-bg) .confirm-card .confirm-date,
