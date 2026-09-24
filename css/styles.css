@@ -15,7 +15,7 @@
 
 [hidden] { display: none !important; }
 
-html { scroll-behavior: smooth; background: #610202 url("../assets/fondo.jpeg") center / cover no-repeat; }
+html { scroll-behavior: smooth; background: #610202 url("../assets/fondo.jpg") center / cover no-repeat; }
 
 body {
   font-family: var(--serif);
@@ -73,7 +73,7 @@ img { display: block; max-width: 100%; }
 .section.cream:not(.video-bg),
 .section.dark:not(.video-bg),
 .cover:not(.video-bg) {
-  background-image: url("../assets/fondo.jpeg");
+  background-image: url("../assets/fondo.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
